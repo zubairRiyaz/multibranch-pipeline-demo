@@ -2,24 +2,24 @@ pipeline {
   
     agent any
   
-    stages
+    stages {
   
-        stage{"build"} {
+        stage{'build'} {
     
              steps {
                  echo 'builing main'
              }
         }
-    }
-        stage{"test"} {
+    
+        stage{'test'} {
     
              steps {
                  echo 'testing main'
              }
         }
-    }
+    
   
-        stage{"deploy"} {
+        stage{'deploy'} {
     
              steps {
                  echo 'deploying main'
