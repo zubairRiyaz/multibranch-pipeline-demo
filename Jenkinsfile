@@ -4,14 +4,14 @@ pipeline {
   
     stages {
   
-        stage{"build"} {
+        stage('build') {
     
              steps {
                  echo 'builing main'
              }
         }
     
-        stage{"test"} {
+        stage('test') {
     
              steps {
                  echo 'testing main'
@@ -19,7 +19,7 @@ pipeline {
         }
     
   
-        stage{"deploy"} {
+        stage('deploy') {
     
              steps {
                  echo 'deploying main'
