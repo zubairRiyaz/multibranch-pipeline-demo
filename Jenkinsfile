@@ -7,7 +7,7 @@ pipeline {
         stage('build') {
     
              steps {
-                 echo 'builing updated main'
+                 echo 'builing updated main again'
              }
         }
     
