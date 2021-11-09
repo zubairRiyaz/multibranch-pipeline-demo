@@ -7,7 +7,7 @@ pipeline {
         stage('build') {
     
              steps {
-                 echo 'builing'
+                 echo 'builing webhook'
              }
         }
     
