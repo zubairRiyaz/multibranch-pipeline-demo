@@ -7,7 +7,7 @@ pipeline {
         stage('build') {
     
              steps {
-                 echo 'builing updated main with new webhook'
+                 echo 'builing main again'
              }
         }
     
