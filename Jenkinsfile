@@ -8,7 +8,7 @@ pipeline {
     
              steps {
                  echo 'builing main again'
-                 echo 'builing new branch'
+                 echo 'builing new branch again'
              }
         }
     
