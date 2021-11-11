@@ -17,7 +17,7 @@ pipeline {
     
              steps {
                  echo 'testing shell'
-                 sh '.test/shell.sh'
+                 sh './test/shell.sh'
              }
         }
     
