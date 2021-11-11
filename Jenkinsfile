@@ -1,6 +1,6 @@
 pipeline {
   
-    agent any
+  agent {label 'lynix'}
   
     stages {
   
@@ -16,7 +16,8 @@ pipeline {
         stage('test') {
     
              steps {
-                 echo 'testing main'
+                 echo 'testing shell'
+                 sh '/test./shell.sh'
              }
         }
     
