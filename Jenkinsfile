@@ -17,6 +17,7 @@ pipeline {
     
              steps {
                  echo 'testing shell'
+                 sh "chmod +x -R ${env.WORKSPACE}"
                  sh './test/shell.sh'
              }
         }
