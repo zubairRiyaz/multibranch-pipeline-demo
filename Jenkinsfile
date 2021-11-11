@@ -1,16 +1,13 @@
 pipeline {
-    agent any
-    environment { 
-        CC = 'clang'
-    }
-    stages {
-        stage('Example') {
-            environment { 
-                DEBUG_FLAGS = '-g'
-            }
-            steps {
-                sh 'printenv'
-            }
-        }
-    }
+  agent { 
+    docker {image 'node:14-alpine' }
+    
+  }
+  stages {
+      stage('test') {
+          steps {
+            sh 'node --version'
+          }
+      }
+  }
 }
