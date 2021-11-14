@@ -1,8 +1,9 @@
 pipeline {
   
     agent any
-    tools {
-        maven 'Maven'
+    parameters {
+        choice(name: 'VERSION', choices: ['1.1', '1.2', '1.3'], description: '')
+        booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
     stages {
   
@@ -10,13 +11,17 @@ pipeline {
     
             steps {
                 echo 'building sample1'
-                sh "mvn install"
+                
               
             }
         }
   
         stage('test') {
-    
+            when {
+                expression { 
+                    params.executeTests == true
+                }
+            }  
             steps {
                 echo 'testing the application'
             }
@@ -25,7 +30,7 @@ pipeline {
         stage('deploy') {
     
             steps {
-                echo 'deploying the application'
+              echo "deploying version ${params.Version}"
             }
         }
     }
