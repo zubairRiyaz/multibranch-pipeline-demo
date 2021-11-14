@@ -1,12 +1,23 @@
 pipeline {
-  agent { 
-    docker { image 'node:14-alpine' }
-  }
-  stages {
-      stage('test') {
-          steps {
-            sh 'node --version'
-          }
-      }
-  }
+    agent none
+    stages {
+        stage('Example Build') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Example Deploy') {
+            when {
+                beforeInput true
+                branch 'production'
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
+            steps {
+                echo 'Deploying'
+            }
+        }
+    }
 }
