@@ -9,7 +9,7 @@ pipeline {
         stage('Example Deploy') {
             when {
                 beforeOptions true
-                branch 'testing'
+                branch 'newbranch2'
             }
             options {
                 lock label: 'testing-deploy-envs', quantity: 1, variable: 'deployEnv'
