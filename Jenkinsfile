@@ -7,7 +7,7 @@ pipeline {
         stage('build') {
     
              steps {
-                 git branch: 'multibranch-sample1', url: 'https://github.com/zubairRiyaz/multibranch-pipeline-demo.git'
+      
                  echo 'builing main again'
                  echo 'builing newbranch1'
              }
