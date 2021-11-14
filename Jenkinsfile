@@ -7,15 +7,15 @@ pipeline {
             }
         }
         stage('Example Deploy') {
-            agent {
-                label "some-label"
-            }
             when {
-                beforeAgent true
-                branch 'production'
+                beforeOptions true
+                branch 'testing'
+            }
+            options {
+                lock label: 'testing-deploy-envs', quantity: 1, variable: 'deployEnv'
             }
             steps {
-                echo 'Deploying'
+                echo "Deploying to ${deployEnv}"
             }
         }
     }
