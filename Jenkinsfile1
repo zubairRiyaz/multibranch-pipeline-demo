@@ -7,9 +7,8 @@ pipeline {
            git --version
            node --version
            curl --version
-         '''
-         
+         '''  
        }  
      }  
    }
- }  
+}  
