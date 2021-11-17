@@ -5,7 +5,7 @@ pipeline {
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
-                submitter "alice,bob"
+                submitter "zubair,bob"
                 parameters {
                     string(name: 'PERSON', defaultValue: '', description: 'Who should I say hello to?')
                 }
