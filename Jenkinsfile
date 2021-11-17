@@ -9,7 +9,7 @@ pipeline {
         stage('Example Deploy') {
             when {
                 branch 'newbranch2'
-                environment name: 'DEPLOY_TO', value: 'production'
+                
             }
             steps {
                 echo 'Deploying'
