@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Example Deploy') {
             when {
-                branch 'newbranch2'
+                branch 'prod'
                 
             }
             steps {
