@@ -1,33 +1,72 @@
 pipeline {
-  
-  agent any
-  
-    stages {
-  
-        stage('build') {
-    
-             steps {
-      
-                 echo 'builing main again'
-                 echo 'builing newbranch2'
-             }
-        }
-    
-        stage('test') {
-    
-             steps {
-                 echo 'testing shell'
-                 sh "chmod +x -R ${env.WORKSPACE}"
-                 sh './test/shell.sh'
-             }
-        }
-    
-  
-        stage('deploy') {
-    
-             steps {
-                 echo 'deploying main'
-             }
+
+    agent {
+        node {
+            label 'lynix-slave'
         }
     }
+
+    options {
+        buildDiscarder logRotator( 
+                    daysToKeepStr: '16', 
+                    numToKeepStr: '10'
+            )
+    }
+
+    stages {
+        
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+                sh """
+                echo "Cleaned Up Workspace For Project"
+                """
+            }
+        }
+
+        stage('Code Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: 'https://github.com/zubairRiyaz/multibranch-pipeline-demo.git']]
+                ])
+            }
+        }
+
+        stage(' Unit Testing') {
+            when {
+                branch 'multibranch-sample1'
+            } 
+            steps {
+                sh """
+                echo "Running Unit Tests"
+                """
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                sh """
+                echo "Running Code Analysis"
+                """
+            }
+        }
+
+        stage('Build Deploy Code') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh """
+                echo "Building Artifact"
+                """
+
+                sh """
+                echo "Deploying Code"
+                """
+            }
+        }
+
+    }   
 }
