@@ -1,37 +1,72 @@
 pipeline {
-  
-    agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.1', '1.2', '1.3'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+
+    agent {
+        node {
+            label 'lynix-slave'
+        }
     }
+
+    options {
+        buildDiscarder logRotator( 
+                    daysToKeepStr: '16', 
+                    numToKeepStr: '10'
+            )
+    }
+
     stages {
-  
-        stage('build') {
-    
+        
+        stage('Cleanup Workspace') {
             steps {
-                echo 'building sample1'
-                
-              
+                cleanWs()
+                sh """
+                echo "Cleaned Up Workspace For Project"
+                """
             }
         }
-  
-        stage('test') {
+
+        stage('Code Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: 'https://github.com/zubairRiyaz/multibranch-pipeline-demo.git']]
+                ])
+            }
+        }
+
+        stage(' Unit Testing') {
             when {
-                expression { 
-                    params.executeTests == true
-                }
-            }  
+                branch 'multibranch-sample1'
+            } 
             steps {
-                echo 'testing the application'
+                sh """
+                echo "Running Unit Tests"
+                """
             }
         }
-  
-        stage('deploy') {
-    
+
+        stage('Code Analysis') {
             steps {
-              echo "deploying version ${params.VERSION}"
+                sh """
+                echo "Running Code Analysis"
+                """
             }
         }
-    }
+
+        stage('Build Deploy Code') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh """
+                echo "Building Artifact"
+                """
+
+                sh """
+                echo "Deploying Code"
+                """
+            }
+        }
+
+    }   
 }
