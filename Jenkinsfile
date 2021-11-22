@@ -39,7 +39,7 @@ pipeline {
 
         stage('Build Deploy Code') {
             when {
-                  Not {
+                  not {
                        branch 'master'
                   }
             }           
