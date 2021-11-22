@@ -28,16 +28,6 @@ pipeline {
             }
         }
 
-        stage(' Unit Testing') {
-            when {
-                branch 'multibranch-sample1'
-            } 
-            steps {
-                sh """
-                echo "Running Unit Tests"
-                """
-            }
-        }
 
         stage('Code Analysis') {
             steps {
@@ -49,15 +39,28 @@ pipeline {
 
         stage('Build Deploy Code') {
             when {
-                branch 'main'
+                  Not {
+                       branch 'master'
+                  }
+            }           
+            steps {
+                  sh """
+                  echo "Building Artifact"
+                  """
+
+                  sh """
+                  echo "Deploying Code"
+                  """
             }
+        }
+        
+        stage('Testing') {
+            when {
+                branch 'multibranch-sample1'
+            } 
             steps {
                 sh """
-                echo "Building Artifact"
-                """
-
-                sh """
-                echo "Deploying Code"
+                echo "Running Unit Tests"
                 """
             }
         }
