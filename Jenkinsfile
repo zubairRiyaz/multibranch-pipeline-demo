@@ -6,12 +6,6 @@ pipeline {
         }
     }
 
-    options {
-        buildDiscarder logRotator( 
-                    daysToKeepStr: '16', 
-                    numToKeepStr: '10'
-            )
-    }
 
     stages {
         
@@ -34,16 +28,6 @@ pipeline {
             }
         }
 
-        stage(' Unit Testing') {
-            when {
-                branch 'multibranch-sample1'
-            } 
-            steps {
-                sh """
-                echo "Running Unit Tests"
-                """
-            }
-        }
 
         stage('Code Analysis') {
             steps {
@@ -55,15 +39,28 @@ pipeline {
 
         stage('Build Deploy Code') {
             when {
-                branch 'main'
+                  not {
+                       branch 'master'
+                  }
+            }           
+            steps {
+                  sh """
+                  echo "Building Artifact"
+                  """
+
+                  sh """
+                  echo "Deploying Code"
+                  """
             }
+        }
+        
+        stage('Testing') {
+            when {
+                branch 'multibranch-sample1'
+            } 
             steps {
                 sh """
-                echo "Building Artifact"
-                """
-
-                sh """
-                echo "Deploying Code"
+                echo "Running Unit Tests"
                 """
             }
         }
