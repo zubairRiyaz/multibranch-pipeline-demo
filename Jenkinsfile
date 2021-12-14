@@ -40,7 +40,7 @@ pipeline {
         stage('Build Deploy Code') {
             when {
                   not {
-                       branch 'master'
+                       branch 'main'
                   }
             }           
             steps {
