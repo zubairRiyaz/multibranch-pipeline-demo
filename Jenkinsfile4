@@ -1,0 +1,12 @@
+pipeline {
+  agent {
+   label 'DockerAgent'
+  }
+  stages {
+    stage('Running Build') {
+      steps {
+        echo 'Successfully build using Docker Template'
+      }
+    }
+  }
+}
